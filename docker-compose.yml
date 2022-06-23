@@ -1,6 +1,6 @@
 version: '3.9'
 services:
-  database:
+  database_x:
     image: postgres:latest
     container_name: database_x
     restart: always
@@ -9,4 +9,17 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./sql/init_scripts.sql:/docker-entrypoint-initdb.d/0_init.sql
+      - ./sql/table.sql:/docker-entrypoint-initdb.d/init_0.sql
+      - ./sql/data.sql:/docker-entrypoint-initdb.d/init_1.sql
+
+
+  database_y:
+    image: postgres:latest
+    container_name: database_y
+    restart: always
+    env_file:
+      - database.env
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./sql/table.sql:/docker-entrypoint-initdb.d/init_0.sql
