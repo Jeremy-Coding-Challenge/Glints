@@ -5,7 +5,7 @@ services:
     container_name: database_x
     restart: always
     env_file:
-      - database.env
+      - ./env/database.env
     ports:
       - "5432:5432"
     volumes:
@@ -17,8 +17,40 @@ services:
     container_name: database_y
     restart: always
     env_file:
-      - database.env
+      - ./env/database.env
     ports:
       - "5433:5432"
     volumes:
       - ./sql/table.sql:/docker-entrypoint-initdb.d/init_0.sql
+
+  postgres:
+    image: postgres:latest
+    container_name: airflow_db
+    restart: always
+    env_file:
+      - ./env/airflow.env
+    ports:
+      - "5434:5432"
+
+  webserver:
+    image: puckel/docker-airflow:latest
+    container_name: airflow
+    restart: always
+    depends_on:
+      - source_db
+      - target_db
+    volumes:
+      - ./dags:/usr/local/airflow/dags
+    ports:
+      - "5884:8080"
+    env_file:
+      - ./env/airflow.env
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "[ -f /usr/local/airflow/airflow-webserver.pid ]"
+        ]
+      interval: 30s
+      timeout: 30s
+      retries: 3
