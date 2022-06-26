@@ -31,8 +31,8 @@
 3. Under the `DAG` tab, turn on `DAG_TRANSFER_DATA_FROM_SOURCE_TO_TARGET`
 4. After the successfully running the dag, using `DBeaver`, access the target postgres DB
 5. Run `SELECT * FROM public.sales_target` and you should see 3 records
-6. It should look something like this
-![image](images/result.jpg)
+6. It should look something like this <br>
+![image](images/result.JPG)
 
 
 
