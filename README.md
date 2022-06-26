@@ -32,7 +32,7 @@
 4. After the successfully running the dag, using `DBeaver`, access the target postgres DB
 5. Run `SELECT * FROM public.sales_target` and you should see 3 records
 6. It should look something like this
-![image](images/assignment_2.jpg)
+![image](images/result.jpg)
 
 
 
